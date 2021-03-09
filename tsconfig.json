@@ -1,0 +1,13 @@
+{
+  "include": ["src/*"],
+  "compilerOptions": {    
+    "lib": ["ES6"],
+    "moduleResolution": "node",
+    "strict": true,
+    "outDir": "types",
+    "esModuleInterop": true,    
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "target": "ES6"
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "name": "markdown-it-citations",
+  "version": "1.0.0",
+  "description": "pandoc compatible citations for markdown-it",
+  "type": "module",
+  "main": "cjs/index.js",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "keywords": [
+    "markdown-it-plugin",
+    "citations",
+    "citeproc",
+    "markdown-it"
+  ],
+  "types": "types/index.d.ts",
+  "scripts": {
+    "build": "esbuild src/index.ts --outdir=dist --format=esm",
+    "build:cjs": "esbuild src/index.ts --outfile=cjs/index.js --format=cjs",
+    "test": "npm run build && nyc mocha"
+  },
+  "homepage": "https://github.com/martinring/markdown-it-citations",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/martinring/markdown-it-citations.git"
+  },
+  "bugs": {
+    "url": "https://github.com/martinring/markdown-it-citations/issues"
+  },
+  "author": "Martin Ring <mail@martinring.de>",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/markdown-it": "^12.0.1",
+    "@types/punycode": "^2.1.0",
+    "esbuild": "^0.8.54",
+    "markdown-it": "^12.0.4",
+    "markdown-it-testgen": "^0.1.6",
+    "mocha": "^8.3.0",
+    "nyc": "^15.1.0",
+    "typescript": "^4.2.2"
+  }
+}

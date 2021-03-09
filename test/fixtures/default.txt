@@ -1,0 +1,65 @@
+
+.
+Blah blah [see @doe99, pp. 33-35; also @smith04, chap. 1].
+.
+<p>Blah blah (NormalCitation|see |doe99|, pp. 33-35);(NormalCitation| also |smith04|, chap. 1).</p>
+.
+
+
+.
+Blah blah [@doe99, pp. 33-35, 38-39 and *passim*].
+.
+<p>Blah blah (NormalCitation||doe99|, pp. 33-35, 38-39 and <em>passim</em>).</p>
+.
+
+
+.
+Blah blah [@smith04; @doe99].
+.
+<p>Blah blah (NormalCitation||smith04|);(NormalCitation| |doe99|).</p>
+.
+
+
+.
+[@smith{ii, A, D-Z}, with a suffix]
+.
+<p>(NormalCitation||smith|{ii, A, D-Z}, with a suffix)</p>
+.
+
+
+.
+[@smith, {pp. iv, vi-xi, (xv)-(xvii)} with suffix here]
+.
+<p>(NormalCitation||smith|, {pp. iv, vi-xi, (xv)-(xvii)} with suffix here)</p>
+.
+
+
+.
+Smith says blah [-@smith04].
+.
+<p>Smith says blah (SuppressAuthor||smith04|).</p>
+.
+
+
+.
+@smith04 says blah.
+.
+<p>(AuthorInText||smith04|) says blah.</p>
+.
+
+
+.
+@smith04 [p. 33] says blah.
+.
+<p>(AuthorInText||smith04|p. 33) says blah.</p>
+.
+
+
+Footnotes should not parse as citations
+.
+[^this note contains a @citation]
+.
+<p>[^this note contains a (AuthorInText||citation|)]</p>
+.
+
+
