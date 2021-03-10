@@ -2,6 +2,7 @@
 
 import path from 'path';
 import url from 'url';
+import footnote from 'markdown-it-footnote';
 import generate from 'markdown-it-testgen';
 import markdown from 'markdown-it';
 import plugin from '../dist/index.js';
@@ -9,7 +10,7 @@ import plugin from '../dist/index.js';
 const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-describe('citations', function () {  
+describe('compatibility: markdown-it-footnote', function () {  
   var md = markdown().use(plugin,{
     citeproc: (env) => {
       const cites = []
@@ -22,9 +23,10 @@ describe('citations', function () {
           return str
         }
       }
-    },
-    'suppress-bibliography': true  
+    },    
+    'suppress-bibliography': true
   });
+  md.use(footnote);
 
-  generate(path.join(__dirname, 'fixtures/default.txt'), md);
+  generate(path.join(__dirname, 'fixtures/footnotes.txt'), md);
 });

@@ -1,0 +1,17 @@
+dedicated refs section
+.
+before
+
+:::{#refs}
+the refs:
+:::
+
+see @here
+.
+<p>before</p>
+<div id="refs" class="refs">
+<p>the refs:</p>
+[bib]
+</div>
+<p>see (AuthorInText||here|)</p>
+.

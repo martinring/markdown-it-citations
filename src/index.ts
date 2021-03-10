@@ -21,6 +21,8 @@ interface CiteProc<T> {
 
 interface CitationOptions {
   citeproc: (env: object) => CiteProc<any>
+  "suppress-bibliography"?: boolean
+  "reference-section-title"?: string
 }
 
 const Citations: PluginWithOptions<CitationOptions> = (md,options) => {
@@ -28,7 +30,7 @@ const Citations: PluginWithOptions<CitationOptions> = (md,options) => {
     citation: /^([^^-]|[^^].+?)?(-)?@([\w][\w:.#$%&\-+?<>~\/]*)(.+)?$/,
     inText: /^@([\w][\w:.#$%&\-+?<>~\/]*)(\s*)(\[)?/,
     allowedBefore: /^[^a-zA-Z.0-9]$/
-  }
+  }  
 
   md.inline.ruler.after('emphasis', 'citation', (state,silent) => {
     let max = state.posMax
@@ -117,6 +119,41 @@ const Citations: PluginWithOptions<CitationOptions> = (md,options) => {
       return citeproc.renderCluster(tkns[idx].meta,slf)
     }
     md.renderer.rules['cite_close'] = () => ''  
+
+    if (!options?.['suppress-bibliography']) {
+      md.core.ruler.push('bibliography',(state) => {    
+        if (!state.inlineMode) {
+          const i = state.tokens.findIndex((tk) => tk.attrGet('id') == 'refs')          
+          if (i >= 0) {
+            const refsOpen = state.tokens[i]
+            if (refsOpen.nesting != 1) {
+              return false
+            }
+            let j = i + 1
+            while (j < state.tokens.length) {
+              if (state.tokens[j].tag == refsOpen.tag && state.tokens[j].level == refsOpen.level && state.tokens[j].nesting == -1) {
+                state.tokens.splice(j,0,new state.Token('bibliography','',0))
+                return true
+              }
+              j += 1
+            } 
+            return false
+          } else {
+            const refsOpen = new state.Token('refs_container','div',1)            
+            refsOpen.attrSet('id','refs')
+            state.tokens.push(refsOpen)
+            state.tokens.push(new state.Token('bibliography','',0))
+            state.tokens.push(new state.Token('refs_container','div',-1))
+            return true
+          }                     
+        } else return false
+      })
+    
+      md.renderer.rules['bibliography'] = (tks,idx,opts,env) => {      
+        const citeproc: CiteProc<any> | undefined = options?.citeproc ? env.citeproc || (env.citeproc = options?.citeproc(env)) : undefined
+        return citeproc?.renderBibliography() || '<NO CITEPROC CONFIGURED>'
+      }
+    }
   }
 }
 
